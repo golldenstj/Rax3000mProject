@@ -219,7 +219,7 @@ jobs:
       with:
         tag_name: ${{ steps.tag.outputs.release_tag }}
         body_path: release.txt
-        files: /home/runner/work/Actions-Rax3000m-OpenWrt/Actions-Rax3000m-OpenWrt/openwrt/bin/targets/mediatek/mt7981/immortalwrt-*squashfs*
+        files: /home/runner/work/Rax3000mProject/Rax3000mProject/openwrt/bin/targets/mediatek/mt7981/immortalwrt-*squashfs*
 
     - name: Delete workflow runs
       uses: wekingchen/delete-workflow-runs@main
