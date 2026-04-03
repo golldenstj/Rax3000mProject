@@ -15,9 +15,9 @@ rm -rf feeds/packages/net/{xray-core,xray-plugin,v2ray-core,v2ray-plugin,v2ray-g
 rm -rf feeds/luci/applications/{luci-app-passwall,luci-app-ssr-plus}
 git clone https://github.com/sbwml/openwrt_helloworld package/helloworld
 
-# 更新 golang 1.24 版本
+# 更新 golang 1.26 版本
 rm -rf feeds/packages/lang/golang
-git clone https://github.com/sbwml/packages_lang_golang -b 25.x feeds/packages/lang/golang
+git clone https://github.com/sbwml/packages_lang_golang -b 26.x feeds/packages/lang/golang
 
 # 添加luci-app-alist源码
 git clone https://github.com/sbwml/luci-app-alist package/alist
