@@ -19,6 +19,12 @@ git clone https://github.com/sbwml/openwrt_helloworld package/helloworld
 rm -rf feeds/packages/lang/golang
 git clone https://github.com/sbwml/packages_lang_golang -b 26.x feeds/packages/lang/golang
 
+# 补充 Rust package support
+rm -rf feeds/packages/lang/rust
+git clone -b openwrt-23.05 --depth=1 https://github.com/openwrt/packages.git openwrt-packages-rust
+cp -r openwrt-packages-rust/lang/rust feeds/packages/lang
+rm -rf openwrt-packages-rust
+
 # 添加luci-app-alist源码
 git clone https://github.com/sbwml/luci-app-alist package/alist
 
@@ -43,14 +49,14 @@ sed -i 's|include ../../luci\.mk|include ../../../../package/luci.mk|' feeds/luc
 rm -rf feeds/packages/net/{zerotier,frp,kcptun,haproxy}
 cp -r coolsnowwolf-packages/net/{zerotier,frp,kcptun,haproxy} feeds/packages/net
 
-# 修改frp版本为官网最新v0.66.0 https://github.com/fatedier/frp
+# 修改frp版本为官网最新v0.68.1 https://github.com/fatedier/frp
 rm -rf feeds/packages/net/frp
 wget https://github.com/coolsnowwolf/packages/archive/0f7be9fc93d68986c179829d8199824d3183eb60.zip -O OldPackages.zip
 unzip OldPackages.zip
 cp -r packages-0f7be9fc93d68986c179829d8199824d3183eb60/net/frp feeds/packages/net/
 rm -rf OldPackages.zip packages-0f7be9fc93d68986c179829d8199824d3183eb60s
-sed -i 's/PKG_VERSION:=0.53.2/PKG_VERSION:=0.66.0/' feeds/packages/net/frp/Makefile
-sed -i 's/PKG_HASH:=ff2a4f04e7732bc77730304e48f97fdd062be2b142ae34c518ab9b9d7a3b32ec/PKG_HASH:=afe1aca9f6e7680a95652e8acf84aef4a74bcefe558b5b91270876066fff3019/' feeds/packages/net/frp/Makefile
+sed -i 's/PKG_VERSION:=0.53.2/PKG_VERSION:=0.68.1/' feeds/packages/net/frp/Makefile
+sed -i 's/PKG_HASH:=ff2a4f04e7732bc77730304e48f97fdd062be2b142ae34c518ab9b9d7a3b32ec/PKG_HASH:=44ed7107bf35e4f68dc0e77cd5805102effa5301528b89ee5ab0ab379088edc6/' feeds/packages/net/frp/Makefile
 
 # 删除克隆的 coolsnowwolf-luci 和 coolsnowwolf-packages 仓库
 rm -rf coolsnowwolf-luci
