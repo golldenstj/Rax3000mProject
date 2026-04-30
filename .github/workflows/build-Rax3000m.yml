@@ -121,6 +121,12 @@ jobs:
     - name: Install feeds
       run: cd openwrt && ./scripts/feeds install -a
 
+    - name: Install Rust
+      uses: dtolnay/rust-toolchain@stable
+
+    - name: Install Rust target
+      run: rustup target add aarch64-unknown-linux-musl
+
     - name: Load custom configuration
       run: |
         [ -e files ] && mv files openwrt/files
