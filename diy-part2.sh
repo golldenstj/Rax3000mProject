@@ -59,9 +59,6 @@ sed -i 's/PKG_VERSION:=0.53.2/PKG_VERSION:=0.68.1/' feeds/packages/net/frp/Makef
 sed -i 's/PKG_HASH:=ff2a4f04e7732bc77730304e48f97fdd062be2b142ae34c518ab9b9d7a3b32ec/PKG_HASH:=44ed7107bf35e4f68dc0e77cd5805102effa5301528b89ee5ab0ab379088edc6/' feeds/packages/net/frp/Makefile
 
 # 加 noweb 标签规避v0.67之后的变动
-sed -i 's/PKG_VERSION:=0.53.2/PKG_VERSION:=0.68.1/' feeds/packages/net/frp/Makefile
-sed -i 's/PKG_HASH:=ff2a4f04e7732bc77730304e48f97fdd062be2b142ae34c518ab9b9d7a3b32ec/PKG_HASH:=44ed7107bf35e4f68dc0e77cd5805102effa5301528b89ee5ab0ab379088edc6/' feeds/packages/net/frp/Makefile
-
 grep -q 'GO_PKG_TAGS:=noweb' feeds/packages/net/frp/Makefile || \
 sed -i '/GO_PKG_BUILD_PKG:=github.com\/fatedier\/frp\/cmd\/\.\.\./a GO_PKG_TAGS:=noweb' feeds/packages/net/frp/Makefile
 
