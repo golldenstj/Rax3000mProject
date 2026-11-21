@@ -15,6 +15,40 @@ rm -rf feeds/packages/net/{xray-core,xray-plugin,v2ray-core,v2ray-plugin,v2ray-g
 rm -rf feeds/luci/applications/{luci-app-passwall,luci-app-ssr-plus}
 git clone https://github.com/sbwml/openwrt_helloworld package/helloworld
 
+# 修复 SSR Plus+ 在旧版 OpenWrt 上的 socket 依赖误报
+SSR_INIT="package/helloworld/luci-app-ssr-plus/root/etc/init.d/shadowsocksr"
+
+if [ -f "$SSR_INIT" ]; then
+python3 - "$SSR_INIT" <<'PY'
+from pathlib import Path
+import sys
+
+p = Path(sys.argv[1])
+s = p.read_text()
+
+old = '''\
+\t\tfor pkg in $dep_list; do
+\t\t\tif [ ! -s "${file_path}/${pkg}${file_ext}" ]; then
+'''
+
+new = '''\
+\t\tfor pkg in $dep_list; do
+\t\t\tif [ "$USE_TABLES" = "iptables" ] && \\
+\t\t\t   [ "$pkg" = "iptables-mod-socket" ] && \\
+\t\t\t   [ -s "${file_path}/iptables-mod-tproxy${file_ext}" ] && \\
+\t\t\t   iptables -m socket -h >/dev/null 2>&1; then
+\t\t\t\tcontinue
+\t\t\tfi
+\t\t\tif [ ! -s "${file_path}/${pkg}${file_ext}" ]; then
+'''
+
+if old not in s:
+    raise SystemExit("SSR Plus+ 检测代码已变化，请重新适配")
+
+p.write_text(s.replace(old, new, 1))
+PY
+fi
+
 # 更新 golang 1.27 版本
 rm -rf feeds/packages/lang/golang
 git clone https://github.com/sbwml/packages_lang_golang -b 27.x feeds/packages/lang/golang
